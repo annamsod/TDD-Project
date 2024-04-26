@@ -15,16 +15,32 @@ public class Pawn extends ChessPieceBase implements ChessPiece{
         //TODO here goes move logic for pawns
         //WHITE
         if (this.color.equals(Color.WHITE)) {
-            //Not backward or to the side
+            //Not backward or sideways
             if (destination.getY() >= this.location.getY()) {
                 return false;
             }
-            //No more than 2 steps first time
-            else if (this.location.getY() == 6) {
-                return destination.getY() >= 4;
+            //Forward movement
+            if(destination.getX()==this.location.getX()) {
+                //Not forward to occupied square
+                if (chessboard.getPieceAt(destination) != null) {
+                    return false;
+                }
+                //No more than 2 steps first time
+                else if (this.location.getY() == 6) {
+                    return destination.getY() >= 4;
+                }
+                //No more than 1 step the rest of the time
+                else return (this.location.getY() - destination.getY() == 1);
             }
-            //No more than 1 step the rest of the time
-            else return this.location.getY() - destination.getY() <= 1;
+            //Diagonal movement
+            else{
+                //Only to occupied square
+                if(chessboard.getPieceAt(destination)==null){
+                    return false;
+                }
+                //Only one step
+                else return (Math.abs(this.location.getX() - destination.getX()) == 1);
+            }
         }
         return false;
     }

@@ -31,7 +31,7 @@ public class PawnTests {
 
         //For debugging, you can print the board to console, or if you want
         //to implement a command line interface for the game
-        System.out.println(new ChessboardWriter().print(chessboard));
+        //System.out.println(new ChessboardWriter().print(chessboard));
     }
 
     @Test
@@ -42,10 +42,6 @@ public class PawnTests {
 
         //Assert
         assertFalse(pawn.canMove(chessboard, new Square("d2")));
-
-        //For debugging, you can print the board to console, or if you want
-        //to implement a command line interface for the game
-        System.out.println(new ChessboardWriter().print(chessboard));
     }
 
     @Test
@@ -56,10 +52,6 @@ public class PawnTests {
 
         //Assert
         assertTrue(pawn.canMove(chessboard, new Square("e3")));
-
-        //For debugging, you can print the board to console, or if you want
-        //to implement a command line interface for the game
-        System.out.println(new ChessboardWriter().print(chessboard));
     }
 
     @Test
@@ -70,10 +62,6 @@ public class PawnTests {
 
         //Assert
         assertTrue(pawn.canMove(chessboard, new Square("e4")));
-
-        //For debugging, you can print the board to console, or if you want
-        //to implement a command line interface for the game
-        System.out.println(new ChessboardWriter().print(chessboard));
     }
 
     @ParameterizedTest
@@ -85,56 +73,70 @@ public class PawnTests {
 
         // Assert
         assertFalse(pawn.canMove(chessboard, destination));
-
-        // For debugging, you can print the board to console
-        System.out.println(new ChessboardWriter().print(chessboard));
     }
 
-//    @ParameterizedTest
-//    @MethodSource("diagonalSquareProvider")
-//    public void testMovePawnDiagonallyToEmptySquareIllegal(Square destination) {
-//        // Arrange
-//        Pawn pawn = new Pawn(Color.WHITE, new Square("e2"));
-//        chessboard.addPiece(pawn);
-//
-//        // Assert
-//        assertFalse(pawn.canMove(chessboard, destination));
-//
-//        // For debugging, you can print the board to console
-//        System.out.println(new ChessboardWriter().print(chessboard));
-//    }
+    @Test
+    public void testMovePawnForwardToOccupiedSquareIllegal() {
+        //Arrange
+        Pawn pawn = new Pawn(Color.WHITE, new Square("e2"));
+        chessboard.addPiece(pawn);
 
-//    @Test
-//    public void testMovePawnDiagonallyToOccupiedSquareOneStep() {
-//        // Arrange
-//        Pawn pawn = new Pawn(Color.WHITE, new Square("e2"));
-//        chessboard.addPiece(pawn);
-//
-//        Pawn opponentPawn = new Pawn(Color.BLACK, new Square("d3"));
-//        chessboard.addPiece(opponentPawn);
-//
-//        // Assert
-//        assertTrue(pawn.canMove(chessboard, opponentPawn.getLocation()));
-//
-//        // For debugging, you can print the board to console
-//        System.out.println(new ChessboardWriter().print(chessboard));
-//    }
+        Pawn opponentPawn = new Pawn(Color.BLACK, new Square("e3"));
+        chessboard.addPiece(opponentPawn);
 
-//    @Test
-//    public void testMovePawnDiagonallyToOccupiedSquareTwoStepsIllegal() {
-//        // Arrange
-//        Pawn pawn = new Pawn(Color.WHITE, new Square("e2"));
-//        chessboard.addPiece(pawn);
-//
-//        Pawn opponentPawn = new Pawn(Color.BLACK, new Square("c4"));
-//        chessboard.addPiece(opponentPawn);
-//
-//        // Assert
-//        assertFalse(pawn.canMove(chessboard, opponentPawn.getLocation()));
-//
-//        // For debugging, you can print the board to console
-//        System.out.println(new ChessboardWriter().print(chessboard));
-//    }
+        //Assert
+        assertFalse(pawn.canMove(chessboard, new Square("e3")));
+    }
+
+    @ParameterizedTest
+    @MethodSource("diagonalSquareProvider")
+    public void testMovePawnDiagonallyToEmptySquareIllegal(Square destination) {
+        // Arrange
+        Pawn pawn = new Pawn(Color.WHITE, new Square("e2"));
+        chessboard.addPiece(pawn);
+
+        // Assert
+        assertFalse(pawn.canMove(chessboard, destination));
+    }
+
+    @Test
+    public void testMovePawnDiagonallyToOccupiedSquareOneStepLeft() {
+        // Arrange
+        Pawn pawn = new Pawn(Color.WHITE, new Square("e2"));
+        chessboard.addPiece(pawn);
+
+        Pawn opponentPawn = new Pawn(Color.BLACK, new Square("d3"));
+        chessboard.addPiece(opponentPawn);
+
+        // Assert
+        assertTrue(pawn.canMove(chessboard, opponentPawn.getLocation()));
+    }
+
+    @Test
+    public void testMovePawnDiagonallyToOccupiedSquareOneStepRight() {
+        // Arrange
+        Pawn pawn = new Pawn(Color.WHITE, new Square("e2"));
+        chessboard.addPiece(pawn);
+
+        Pawn opponentPawn = new Pawn(Color.BLACK, new Square("f3"));
+        chessboard.addPiece(opponentPawn);
+
+        // Assert
+        assertTrue(pawn.canMove(chessboard, opponentPawn.getLocation()));
+    }
+
+    @Test
+    public void testMovePawnDiagonallyToOccupiedSquareTwoStepsIllegal() {
+        // Arrange
+        Pawn pawn = new Pawn(Color.WHITE, new Square("e2"));
+        chessboard.addPiece(pawn);
+
+        Pawn opponentPawn = new Pawn(Color.BLACK, new Square("c4"));
+        chessboard.addPiece(opponentPawn);
+
+        // Assert
+        assertFalse(pawn.canMove(chessboard, opponentPawn.getLocation()));
+    }
 
 
 
