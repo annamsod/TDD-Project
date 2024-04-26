@@ -21,7 +21,7 @@ public class PawnTests {
     }
 
     @Test
-    public void testMovePawnBackwardsShouldBeIllegal() {
+    public void testMovePawnBackwardsShouldBeIllegalWhite() {
         //Arrange
         Pawn pawn = new Pawn(Color.WHITE, new Square("e2"));
         chessboard.addPiece(pawn);
@@ -35,7 +35,17 @@ public class PawnTests {
     }
 
     @Test
-    public void testMovePawnSidewaysShouldBeIllegal() {
+    public void testMovePawnBackwardsShouldBeIllegalBlack() {
+        //Arrange
+        Pawn pawn = new Pawn(Color.BLACK, new Square("e7"));
+        chessboard.addPiece(pawn);
+
+        //Assert
+        assertFalse(pawn.canMove(chessboard, new Square("e8")));
+    }
+
+    @Test
+    public void testMovePawnSidewaysShouldBeIllegalWhite() {
         //Arrange
         Pawn pawn = new Pawn(Color.WHITE, new Square("e2"));
         chessboard.addPiece(pawn);
@@ -45,7 +55,17 @@ public class PawnTests {
     }
 
     @Test
-    public void testMovePawnOneStepForward() {
+    public void testMovePawnSidewaysShouldBeIllegalBlack() {
+        //Arrange
+        Pawn pawn = new Pawn(Color.BLACK, new Square("e7"));
+        chessboard.addPiece(pawn);
+
+        //Assert
+        assertFalse(pawn.canMove(chessboard, new Square("d7")));
+    }
+
+    @Test
+    public void testMovePawnOneStepForwardWhite() {
         //Arrange
         Pawn pawn = new Pawn(Color.WHITE, new Square("e2"));
         chessboard.addPiece(pawn);
@@ -55,13 +75,34 @@ public class PawnTests {
     }
 
     @Test
-    public void testMovePawnTwoStepsForwardFirstTime() {
+    public void testMovePawnOneStepForwardBlack() {
+        //Arrange
+        Pawn pawn = new Pawn(Color.BLACK, new Square("e7"));
+        chessboard.addPiece(pawn);
+
+        //Assert
+        assertTrue(pawn.canMove(chessboard, new Square("e6")));
+    }
+
+
+    @Test
+    public void testMovePawnTwoStepsForwardFirstTimeWhite() {
         //Arrange
         Pawn pawn = new Pawn(Color.WHITE, new Square("e2"));
         chessboard.addPiece(pawn);
 
         //Assert
         assertTrue(pawn.canMove(chessboard, new Square("e4")));
+    }
+
+    @Test
+    public void testMovePawnTwoStepsForwardFirstTimeBlack() {
+        //Arrange
+        Pawn pawn = new Pawn(Color.BLACK, new Square("e7"));
+        chessboard.addPiece(pawn);
+
+        //Assert
+        assertTrue(pawn.canMove(chessboard, new Square("e5")));
     }
 
     @ParameterizedTest
@@ -76,7 +117,7 @@ public class PawnTests {
     }
 
     @Test
-    public void testMovePawnForwardToOccupiedSquareIllegal() {
+    public void testMovePawnForwardToOccupiedSquareIllegalWhite() {
         //Arrange
         Pawn pawn = new Pawn(Color.WHITE, new Square("e2"));
         chessboard.addPiece(pawn);
@@ -86,6 +127,19 @@ public class PawnTests {
 
         //Assert
         assertFalse(pawn.canMove(chessboard, new Square("e3")));
+    }
+
+    @Test
+    public void testMovePawnForwardToOccupiedSquareIllegalBlack() {
+        //Arrange
+        Pawn pawn = new Pawn(Color.BLACK, new Square("e7"));
+        chessboard.addPiece(pawn);
+
+        Pawn opponentPawn = new Pawn(Color.WHITE, new Square("e6"));
+        chessboard.addPiece(opponentPawn);
+
+        //Assert
+        assertFalse(pawn.canMove(chessboard, new Square("e6")));
     }
 
     @ParameterizedTest

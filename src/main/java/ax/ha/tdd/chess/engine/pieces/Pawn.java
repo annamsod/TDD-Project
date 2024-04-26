@@ -12,7 +12,6 @@ public class Pawn extends ChessPieceBase implements ChessPiece{
 
     @Override
     public boolean canMove(Chessboard chessboard, Square destination) {
-        //TODO here goes move logic for pawns
         //WHITE
         if (this.color.equals(Color.WHITE)) {
             //Not backward or sideways
@@ -42,6 +41,35 @@ public class Pawn extends ChessPieceBase implements ChessPiece{
                 else return (Math.abs(this.location.getX() - destination.getX()) == 1);
             }
         }
-        return false;
+
+        //BLACK
+        else{
+            //Not backward or sideways
+            if (destination.getY() <= this.location.getY()) {
+                return false;
+            }
+            //Forward movement
+            if(destination.getX()==this.location.getX()) {
+                //Not forward to occupied square
+                if (chessboard.getPieceAt(destination) != null) {
+                    return false;
+                }
+                //No more than 2 steps first time
+                else if (this.location.getY() == 1) {
+                    return destination.getY() <= 3;
+                }
+                //No more than 1 step the rest of the time
+                else return (this.location.getY() - destination.getY() == -1);
+            }
+            //Diagonal movement
+            else{
+                //Only to occupied square
+                if(chessboard.getPieceAt(destination)==null){
+                    return false;
+                }
+                //Only one step
+                else return (Math.abs(this.location.getX() - destination.getX()) == 1);
+            }
+        }
     }
 }
