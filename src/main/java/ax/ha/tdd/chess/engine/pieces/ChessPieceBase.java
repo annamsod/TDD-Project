@@ -47,6 +47,10 @@ public abstract class ChessPieceBase implements ChessPiece {
      */
     public abstract boolean canMove(final Chessboard chessboard, final Square destination);
 
+    public boolean cantPass(Chessboard chessboard, Square destination){
+        return chessboard.getPieceAt(destination) != null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
