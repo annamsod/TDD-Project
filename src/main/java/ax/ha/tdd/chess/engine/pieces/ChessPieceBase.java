@@ -51,6 +51,27 @@ public abstract class ChessPieceBase implements ChessPiece {
         return chessboard.getPieceAt(destination) != null;
     }
 
+    public boolean moveIsIllegal(Chessboard chessboard, Square destination){
+        int currentX = this.getLocation().getX();
+        int currentY = this.getLocation().getY();
+        int destX = destination.getX();
+        int destY = destination.getY();
+
+        //No piece can eat a piece of the same color
+        ChessPiece pieceAtDestination = chessboard.getPieceAt(destination);
+        if (pieceAtDestination != null && pieceAtDestination.getColor() == this.color) {
+            return true;
+        }
+
+        //Cant move to the same square
+        if(currentX==destX&&currentY==destY){
+            return true;
+        }
+
+        //Cant move outside the board
+        return destX < 0 || destX > 7 || destY < 0 || destY > 7;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

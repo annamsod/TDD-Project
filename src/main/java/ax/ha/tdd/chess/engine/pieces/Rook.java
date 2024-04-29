@@ -11,6 +11,10 @@ public class Rook extends ChessPieceBase implements ChessPiece{
 
     @Override
     public boolean canMove(Chessboard chessboard, Square destination) {
+        if(moveIsIllegal(chessboard,destination)){
+            return false;
+        }
+
         int currentX = this.getLocation().getX();
         int currentY = this.getLocation().getY();
         int destX = destination.getX();
@@ -18,12 +22,6 @@ public class Rook extends ChessPieceBase implements ChessPiece{
 
         // Can't move both vertically and horizontally
         if (currentX != destX && currentY != destY) {
-            return false;
-        }
-
-        // Can't move to square with piece of own color
-        ChessPiece pieceAtDestination = chessboard.getPieceAt(destination);
-        if (pieceAtDestination != null && pieceAtDestination.getColor() == this.color) {
             return false;
         }
 

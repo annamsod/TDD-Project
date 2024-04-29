@@ -12,6 +12,9 @@ public class Pawn extends ChessPieceBase implements ChessPiece{
 
     @Override
     public boolean canMove(Chessboard chessboard, Square destination) {
+        if(moveIsIllegal(chessboard,destination)){
+            return false;
+        }
         //WHITE
         if (this.color.equals(Color.WHITE)) {
             //Not backward or sideways
