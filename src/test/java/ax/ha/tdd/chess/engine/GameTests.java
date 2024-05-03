@@ -54,6 +54,32 @@ public class GameTests {
     }
 
     @Test
+    public void testMoveFromOutsideTheBoardIllegal(){
+        //Arrange
+        Game game = new GameImpl();
+        assertEquals(Color.WHITE, game.getPlayerToMove());
+
+        //Act
+        game.move("r5-e5");
+
+        //Assert
+        assertEquals(Color.WHITE,game.getPlayerToMove());
+    }
+
+    @Test
+    public void testMoveToOutsideTheBoardIllegal(){
+        //Arrange
+        Game game = new GameImpl();
+        assertEquals(Color.WHITE, game.getPlayerToMove());
+
+        //Act
+        game.move("c2-c9");
+
+        //Assert
+        assertEquals(Color.WHITE,game.getPlayerToMove());
+    }
+
+    @Test
     public void testMoveOpponentsPieceShouldBeIllegal() {
         //Arrange
         Game game = new GameImpl();

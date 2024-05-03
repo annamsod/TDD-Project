@@ -35,11 +35,24 @@ public class GameImpl implements Game{
         return move.split("-");
     }
 
+    private boolean isValidSquare(String square) {
+        char letter = square.charAt(0);
+        int number = Character.digit(square.charAt(1), 10);
+
+        // Check if the letter is between 'a' and 'h' and the number is between 1 and 8
+        return (letter >= 'a' && letter <= 'h' && number >= 1 && number <= 8);
+    }
+
     @Override
     public void move(String move) {
         //TODO this should trigger your move logic.
         //1. Parse the source and destination of the input "move"
         String [] parts = parse(move);
+        if (!isValidSquare(parts[0]) || !isValidSquare(parts[1])) {
+            illegalMove = true;
+            getLastMoveResult();
+            return; // Exit the method if the move is illegal
+        }
         Square currentPos = new Square(parts[0]);
         Square destination = new Square(parts[1]);
 
