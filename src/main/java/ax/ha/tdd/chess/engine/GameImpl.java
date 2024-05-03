@@ -5,11 +5,12 @@ public class GameImpl implements Game{
     final ChessboardImpl board = ChessboardImpl.startingBoard();
 
     boolean isNewGame = true;
+    Color playerInTurn = Color.WHITE;
+    Boolean illegalMove = false;
 
     @Override
     public Color getPlayerToMove() {
-        //TODO this should reflect the current state.
-        return Color.WHITE;
+        return playerInTurn;
     }
 
     @Override
@@ -24,19 +25,52 @@ public class GameImpl implements Game{
         if (isNewGame) {
             return "Game hasn't begun";
         }
-        return "Last move was successful (default reply, change this)";
+        else if(illegalMove){
+            return "Illegal move, try again";
+        }
+        return "Last move was successful, next players turn";
+    }
+
+    public static String[] parse(String move){
+        return move.split("-");
     }
 
     @Override
     public void move(String move) {
         //TODO this should trigger your move logic.
         //1. Parse the source and destination of the input "move"
+        String [] parts = parse(move);
+        Square currentPos = new Square(parts[0]);
+        Square destination = new Square(parts[1]);
 
         //2. Check if the piece is allowed to move to the destination
-
         //3. If so, update board (and last move message), otherwise only update last move message to show that an illegal move was tried
 
-        isNewGame = false;
-        System.out.println("Player tried to perform move: " + move);
+        if(board.getPieceAt(currentPos)==null || board.getPieceAt(currentPos).getColor()!=playerInTurn ||
+                !board.getPieceAt(currentPos).canMove(board,destination)){
+            illegalMove=true;
+            getLastMoveResult();
+        }
+        else{
+            illegalMove=false;
+            getLastMoveResult();
+
+            //Remove eaten piece
+            if(board.getPieceAt(destination)!=null){
+                board.removePieceAt(destination);
+            }
+
+            board.movePiece(board.getPieceAt(currentPos),destination );
+
+            isNewGame = false;
+            System.out.println("Player tried to perform move: " + move);
+            if(playerInTurn==Color.WHITE){
+                playerInTurn=Color.BLACK;
+            }
+            else{
+                playerInTurn=Color.WHITE;
+            }
+        }
+
     }
 }

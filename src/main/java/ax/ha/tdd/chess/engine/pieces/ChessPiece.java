@@ -25,6 +25,8 @@ public interface ChessPiece {
      */
     Square getLocation();
 
+    void setLocation(Square dest);
+
     /**
      * Can the piece move to the destination square on this chessboard?
      */
