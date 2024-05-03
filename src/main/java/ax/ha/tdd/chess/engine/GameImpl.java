@@ -35,12 +35,12 @@ public class GameImpl implements Game{
         return move.split("-");
     }
 
-    private boolean isValidSquare(String square) {
+    private boolean isNotValidSquare(String square) {
         char letter = square.charAt(0);
         int number = Character.digit(square.charAt(1), 10);
 
         // Check if the letter is between 'a' and 'h' and the number is between 1 and 8
-        return (letter >= 'a' && letter <= 'h' && number >= 1 && number <= 8);
+        return (letter < 'a' || letter > 'h' || number < 1 || number > 8);
     }
 
     @Override
@@ -48,8 +48,9 @@ public class GameImpl implements Game{
         //TODO this should trigger your move logic.
         //1. Parse the source and destination of the input "move"
         String [] parts = parse(move);
-        if (!isValidSquare(parts[0]) || !isValidSquare(parts[1])) {
+        if (isNotValidSquare(parts[0]) || isNotValidSquare(parts[1])) {
             illegalMove = true;
+            isNewGame = false;
             getLastMoveResult();
             return; // Exit the method if the move is illegal
         }
@@ -75,7 +76,7 @@ public class GameImpl implements Game{
 
             board.movePiece(board.getPieceAt(currentPos),destination );
 
-            isNewGame = false;
+
             System.out.println("Player tried to perform move: " + move);
             if(playerInTurn==Color.WHITE){
                 playerInTurn=Color.BLACK;
